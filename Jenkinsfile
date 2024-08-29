@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     echo "Triggering update manifest job..."
-                    build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_ID)]
+                    build job: 'updateimage', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_ID)]
                 }
             }
         }
