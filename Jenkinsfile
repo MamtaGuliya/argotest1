@@ -51,12 +51,12 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Update Tag in Manifest Repo') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'GitHub_Auth', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1.git'
+                        git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1/manifest.git'
                         echo 'Updating Image TAG in Kubernetes manifest'
                         sh 'sed -i "s/login:.*/login:${IMAGE_TAG}/g" test-login-app/values.yaml'
                         echo 'Git Config'
@@ -64,7 +64,7 @@ pipeline {
                         sh 'git config --global user.name "Jenkins-ci"'
                         sh 'git add test-login-app/values.yaml'
                         sh 'git commit -am "Update Image tag"'
-                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/https://github.com/MamtaGuliya/manifest.git'
+                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/MamtaGuliya/argotest1/manifest.git'
                     }
                 }
             }
