@@ -51,20 +51,26 @@ pipeline {
                 }
             }
         }
-
-        stage('Update Tag in Manifest Repo') {
+        
+        stage('Update Image Tag in Deployment Manifest') {
             steps {
                 script {
+                    // Update the image tag in the deployment.yaml file
+                    echo 'Updating Image TAG in deployment.yaml'
+                    sh 'sed -i "s|image: .*|image: ${REGISTRY_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REGISTRY_NAME}/${IMAGE_NAME}:${IMAGE_TAG}|g" manifest/deployment.yaml'
+
+                    // Git configuration
+                    echo 'Configuring Git'
+                    sh 'git config --global user.email "Jenkins@company.com"'
+                    sh 'git config --global user.name "Jenkins-ci"'
+
+                    // Commit and push the changes
+                    sh 'git add manifest/deployment.yaml'
+                    sh 'git commit -m "Update Image tag in deployment.yaml to ${IMAGE_TAG}"'
+
+                    // Push to GitHub using the credentials
                     withCredentials([usernamePassword(credentialsId: 'GitHub_Auth', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1/manifest.git'
-                        echo 'Updating Image TAG in Kubernetes manifest'
-                        sh 'sed -i "s/login:/login:${IMAGE_TAG}/g" test-login-app/values.yaml'
-                        echo 'Git Config'
-                        sh 'git config --global user.email "Jenkins@company.com"'
-                        sh 'git config --global user.name "Jenkins-ci"'
-                        sh 'git add test-login-app/values.yaml'
-                        sh 'git commit -am "Update Image tag"'
-                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/MamtaGuliya/argotest1/manifest.git'
+                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/MamtaGuliya/argotest1.git'
                     }
                 }
             }
@@ -77,6 +83,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed. Check the logs for more details.'
-        }
-    }
+        }
+    }
 }
