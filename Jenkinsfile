@@ -70,7 +70,7 @@ pipeline {
 
                     // Push to GitHub using the credentials
                      {
-                        sh 'git push https://github.com/MamtaGuliya/argotest1.git main'
+                        sh 'git push https://github.com/MamtaGuliya/argotest1.git '
                     }
                 }
             }
