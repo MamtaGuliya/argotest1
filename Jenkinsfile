@@ -69,7 +69,10 @@ pipeline {
                     sh 'git commit -m "Update Image tag in deployment.yaml to ${IMAGE_TAG}"'
 
                     // Push to GitHub using the credentials
-                    sh 'git push https://github.com/MamtaGuliya/argotest1.git '  
+                    withCredentials([string(credentialsId: 'Github_Token', variable: 'GITHUB_TOKEN')]){
+                        sh 'git push https://$GITHUB_TOKEN@github.com/MamtaGuliya/argotest1.git main'
+                    }
+                    
                 }
             }
         }
