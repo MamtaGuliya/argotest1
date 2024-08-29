@@ -38,5 +38,5 @@ node {
     stage('Trigger ManifestUpdate') {
         echo "Triggering updateManifestJob..."
         build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: IMAGE_TAG)]
-    }
+    }
 }
