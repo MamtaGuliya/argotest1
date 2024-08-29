@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Pull from GitHub Repo') {
             steps {
-                git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/Iam-7hills/jenkins-prj.git'
+                git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1.git'
             }
         }
 
@@ -77,6 +77,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed. Check the logs for more details.'
-    }
+        }
     }
 }
