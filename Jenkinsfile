@@ -58,7 +58,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'GitHub_Auth', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                         git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1/manifest.git'
                         echo 'Updating Image TAG in Kubernetes manifest'
-                        sh 'sed -i "s/login:.*/login:${IMAGE_TAG}/g" test-login-app/values.yaml'
+                        sh 'sed -i "s/login:/login:${IMAGE_TAG}/g" test-login-app/values.yaml'
                         echo 'Git Config'
                         sh 'git config --global user.email "Jenkins@company.com"'
                         sh 'git config --global user.name "Jenkins-ci"'
@@ -77,6 +77,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed. Check the logs for more details.'
-        }
-    }
+        }
+    }
 }
