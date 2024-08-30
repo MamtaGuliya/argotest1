@@ -1,2 +1,1 @@
-# this is a successful test
-# check it 
+# both repos are tested finally
