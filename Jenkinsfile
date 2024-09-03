@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Pull from GitHub Repo') {
             steps {
-                git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/MamtaGuliya/argotest1.git'
+                git branch: 'main', credentialsId: 'github_token', url: 'https://github.com/MamtaGuliya/argotest1.git'
             }
         }
 
